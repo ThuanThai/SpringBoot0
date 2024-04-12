@@ -9,4 +9,5 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Long> {
     User save(User newUser);
     User findFirstById(long id);
+    void deleteById(long id);
 }

@@ -66,12 +66,28 @@ public class UserController {
 
     @PostMapping("/admin/user/edit")
     public String postUpdateUser (@ModelAttribute("user") User user) {
-        User updatUser = this.userService.findUserById(user.getId());
-        if (updatUser != null) {
-            updatUser.setFullName(user.getFullName());
-            updatUser.setAddress(user.getAddress());
-            this.userService.handleSaveData(updatUser);
+        User updateUser = this.userService.findUserById(user.getId());
+        System.out.println(updateUser);
+        if (updateUser != null) {
+            updateUser.setFullName(user.getFullName());
+            updateUser.setAddress(user.getAddress());
+            updateUser.setPhone(user.getPhone());
+            updateUser.setPassword(user.getPassword());
+            this.userService.handleSaveData(updateUser);
         }
+        return "redirect:/admin/user";
+    }
+
+    @GetMapping("/admin/user/delete/{id}")
+    public String getDeletePage(Model model, @PathVariable long id) {
+        User user = this.userService.findUserById(id);
+        model.addAttribute("user", user);
+        return "admin/user/delete";
+    }
+
+    @PostMapping("/admin/user/delete/{id}")
+    public String postDeleteUser(@PathVariable long id) {
+        this.userService.deleteUser(id);
         return "redirect:/admin/user";
     }
 }

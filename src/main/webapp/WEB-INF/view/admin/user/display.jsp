@@ -57,7 +57,7 @@
                                         </button></a
                                     >
 
-                                    <a href="">
+                                    <a href="/admin/user/delete/${user.id}">
                                         <button
                                             type="button"
                                             class="btn btn-danger"

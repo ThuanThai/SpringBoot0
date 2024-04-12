@@ -19,7 +19,7 @@
             <div class="row">
                 <div class="col-md-6 col-12 mx-auto">
                     <form:form
-                        accept="/admin/user/create"
+                        action="/admin/user/create"
                         method="post"
                         modelAttribute="newUser"
                     >
