@@ -48,24 +48,31 @@
                                 <div
                                     class="d-flex flex-row justify-content-start gap-3"
                                 >
-                                    <button
-                                        type="button"
-                                        class="btn btn-success"
+                                    <a href="/admin/user/${user.id}"
+                                        ><button
+                                            type="button"
+                                            class="btn btn-success"
+                                        >
+                                            View
+                                        </button></a
                                     >
-                                        View
-                                    </button>
-                                    <button
-                                        type="button"
-                                        class="btn btn-danger"
-                                    >
-                                        Delete
-                                    </button>
-                                    <button
-                                        type="button"
-                                        class="btn btn-warning"
-                                    >
-                                        Edit
-                                    </button>
+
+                                    <a href="">
+                                        <button
+                                            type="button"
+                                            class="btn btn-danger"
+                                        >
+                                            Delete
+                                        </button>
+                                    </a>
+                                    <a href="/admin/user/edit/${user.id}">
+                                        <button
+                                            type="button"
+                                            class="btn btn-warning"
+                                        >
+                                            Edit
+                                        </button>
+                                    </a>
                                 </div>
                             </td>
                         </tr>

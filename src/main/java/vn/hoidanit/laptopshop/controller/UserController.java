@@ -6,10 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.repository.UserRepository;
 import vn.hoidanit.laptopshop.service.UserService;
@@ -38,11 +38,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/admin/user/create", method = RequestMethod.POST)
-    public String creatUserPage(Model model, @ModelAttribute("newUser") User newUser, RedirectAttributes redirectAttributes) {
-        System.out.println(newUser);
-        model.addAttribute("newUser", newUser);
+    public String creatUserPage(@ModelAttribute("newUser") User newUser) {
         this.userService.handleSaveData(newUser);
-        redirectAttributes.addFlashAttribute("message", "Form submitted successfully!");
         return "redirect:http://localhost:8080/admin/user";
     }
 
@@ -51,5 +48,30 @@ public class UserController {
         List<User> usersList = this.userService.findAllUSer();
         model.addAttribute("usersList", usersList);
         return "admin/user/display";
+    }
+
+    @GetMapping("/admin/user/{id}")
+    public String getDetailPage(Model model, @PathVariable long id) {
+        User user = this.userService.findUserById(id);
+        model.addAttribute("user", user);
+        return "admin/user/detail";
+    }
+
+    @GetMapping("/admin/user/edit/{id}")
+    public String getUpdatePage( Model model, @PathVariable long id) {
+        User user = this.userService.findUserById(id);
+        model.addAttribute("user", user);
+        return "admin/user/update";
+    }
+
+    @PostMapping("/admin/user/edit")
+    public String postUpdateUser (@ModelAttribute("user") User user) {
+        User updatUser = this.userService.findUserById(user.getId());
+        if (updatUser != null) {
+            updatUser.setFullName(user.getFullName());
+            updatUser.setAddress(user.getAddress());
+            this.userService.handleSaveData(updatUser);
+        }
+        return "redirect:/admin/user";
     }
 }

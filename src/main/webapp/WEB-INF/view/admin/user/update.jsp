@@ -19,30 +19,33 @@
             <div class="row">
                 <div class="col-md-6 col-12 mx-auto">
                     <form:form
-                        accept="/admin/user/create"
+                        action="/admin/user/edit"
                         method="post"
-                        modelAttribute="newUser"
+                        modelAttribute="user"
                     >
-                        <h3>Creat a user</h3>
+                        <h3>Update a user</h3>
                         <hr />
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label"
-                                >Email address</label
-                            >
+                            <label for="id" class="form-label">ID</label>
                             <form:input
-                                type="email"
+                                type="text"
                                 class="form-control"
-                                aria-describedby="emailHelp"
-                                path="email"
+                                path="id"
+                                value="${user.id}"
                             />
                         </div>
                         <div class="mb-3">
-                            <label
-                                for="exampleInputPassword1"
-                                class="form-label"
+                            <label for="email" class="form-label"
+                                >Email address</label
+                            >
+                            <input type="email" readonly class="form-control-plaintext" id="email" value="${user.email}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label"
                                 >Password</label
                             >
                             <form:input
+                                value="${user.password}"
                                 type="password"
                                 class="form-control"
                                 path="password"
@@ -78,8 +81,8 @@
                                 path="address"
                             />
                         </div>
-                        <button type="submit" class="btn btn-primary">
-                            Submit
+                        <button type="submit" class="btn btn-warning">
+                            Update
                         </button>
                     </form:form>
                 </div>
