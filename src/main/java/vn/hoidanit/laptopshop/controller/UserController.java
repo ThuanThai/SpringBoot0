@@ -47,7 +47,7 @@ public class UserController {
     public String getDisplayUserPage(Model model) {
         List<User> usersList = this.userService.findAllUSer();
         model.addAttribute("usersList", usersList);
-        return "admin/user/display";
+        return "admin/user/show";
     }
 
     @GetMapping("/admin/user/{id}")
