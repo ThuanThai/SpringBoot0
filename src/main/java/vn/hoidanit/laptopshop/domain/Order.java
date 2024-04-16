@@ -25,19 +25,21 @@ public class Order {
 
     @OneToMany(mappedBy = "order")
     private List<OrderDetail> orderDetails;
-    
+
     public long getId() {
         return id;
     }
+
     public void setId(long id) {
         this.id = id;
     }
+
     public double getTotalPrice() {
         return totalPrice;
     }
+
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
-      
 }

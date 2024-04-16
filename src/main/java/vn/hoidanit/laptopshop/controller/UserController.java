@@ -8,21 +8,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
 import vn.hoidanit.laptopshop.domain.User;
-import vn.hoidanit.laptopshop.repository.UserRepository;
+import vn.hoidanit.laptopshop.service.UploadService;
 import vn.hoidanit.laptopshop.service.UserService;
 
 // @RestController
 @Controller
 public class UserController {
-    private UserService userService;
+    private final UserService userService;
+    private final UploadService uploadService;
 
-    public UserController(UserService userService, UserRepository userRepository) {
+    public UserController(UserService userService, UploadService uploadService) {
         this.userService = userService;
+        this.uploadService = uploadService;
     }
-
 
     @GetMapping()
     public String getHomePage(Model model) {
@@ -37,10 +39,11 @@ public class UserController {
         return "/admin/user/create";
     }
 
-    @RequestMapping(value = "/admin/user/create", method = RequestMethod.POST)
-    public String creatUserPage(@ModelAttribute("newUser") User newUser) {
-        this.userService.handleSaveData(newUser);
-        return "redirect:http://localhost:8080/admin/user";
+    @PostMapping("/admin/user/create")
+    public String creatUser(@ModelAttribute("newUser") User newUser, @RequestParam("hoidanitFile") MultipartFile file) {
+        String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+        // this.userService.handleSaveData(newUser);
+        return "redirect:/admin/user";
     }
 
     @GetMapping("/admin/user")
@@ -58,14 +61,14 @@ public class UserController {
     }
 
     @GetMapping("/admin/user/edit/{id}")
-    public String getUpdatePage( Model model, @PathVariable long id) {
+    public String getUpdatePage(Model model, @PathVariable long id) {
         User user = this.userService.findUserById(id);
         model.addAttribute("user", user);
         return "admin/user/update";
     }
 
     @PostMapping("/admin/user/edit")
-    public String postUpdateUser (@ModelAttribute("user") User user) {
+    public String postUpdateUser(@ModelAttribute("user") User user) {
         User updateUser = this.userService.findUserById(user.getId());
         System.out.println(updateUser);
         if (updateUser != null) {

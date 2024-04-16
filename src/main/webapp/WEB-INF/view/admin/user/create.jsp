@@ -46,6 +46,7 @@ pageEncoding="UTF-8" %>
                                         method="post"
                                         modelAttribute="newUser"
                                         class="row"
+                                        enctype="multipart/form-data"
                                     >
                                         <div class="mb-3 col-12 col-md-6">
                                             <label
@@ -114,16 +115,18 @@ pageEncoding="UTF-8" %>
                                             <label for="role" class="form-label"
                                                 >Role</label
                                             >
-                                            <select
+                                            <form:select
                                                 class="form-select"
                                                 id="role"
+                                                path="role.name"
                                             >
-                                                <option selected>
-                                                    Open this select menu
-                                                </option>
-                                                <option value="1">Admin</option>
-                                                <option value="2">User</option>
-                                            </select>
+                                                <form:option value="admin">
+                                                    Admin
+                                                </form:option>
+                                                <form:option value="user">
+                                                    User
+                                                </form:option>
+                                            </form:select>
                                         </div>
                                         <div class="mb-3 col-12 col-md-6">
                                             <label
@@ -132,6 +135,7 @@ pageEncoding="UTF-8" %>
                                                 >Avatar</label
                                             >
                                             <input
+                                                name="hoidanitFile"
                                                 class="form-control"
                                                 type="file"
                                                 id="avatarFile"
