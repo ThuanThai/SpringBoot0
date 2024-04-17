@@ -65,6 +65,8 @@ pageEncoding="UTF-8" %>
                                         <th scope="col">ID</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">FullName</th>
+                                        <th scope="col">Role</th>
+
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -74,6 +76,7 @@ pageEncoding="UTF-8" %>
                                             <th scope="row">${user.id}</th>
                                             <td>${user.email}</td>
                                             <td>${user.fullName}</td>
+                                            <td>${user.role.name}</td>
                                             <td>
                                                 <div
                                                     class="d-flex flex-row justify-content-start gap-3"

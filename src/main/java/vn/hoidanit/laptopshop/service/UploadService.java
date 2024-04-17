@@ -9,12 +9,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.ServletContext;
+import vn.hoidanit.laptopshop.domain.User;
 
 @Service
 public class UploadService {
     private final ServletContext servletContext;
+
     public UploadService(ServletContext servletContext) {
         this.servletContext = servletContext;
+    }
+
+    public String hanldeFindDirFile(String folder, String targetFile) {
+        String rootPath = this.servletContext.getRealPath("/resources/images/");
+        return rootPath + folder + File.separator + targetFile;
     }
 
     public String handleSaveUploadFile(MultipartFile file, String targetFile) {
@@ -28,13 +35,18 @@ public class UploadService {
                 dir.mkdirs();
             // Create the file on server
             finalName = System.currentTimeMillis() + "-" + file.getOriginalFilename();
-            File serverFile = new File(dir.getAbsolutePath() + File.separator + finalName) ;
+            File serverFile = new File(dir.getAbsolutePath() + File.separator + finalName);
             BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
             stream.write(bytes);
             stream.close();
         } catch (IOException e) {
             e.printStackTrace();
-        } 
+        }
         return finalName;
+    }
+
+    public boolean handleDeleteFile(String dir) {
+        File fileTodDelete = new File(dir);
+        return fileTodDelete.delete();
     }
 }

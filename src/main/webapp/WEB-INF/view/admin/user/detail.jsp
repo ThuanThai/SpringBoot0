@@ -36,15 +36,24 @@ pageEncoding="UTF-8" %>
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">User Detail</h1>
                         <div class="mt-5">
                             <div class="row">
-                                <div class="col-8">
-                                    <h3>User Detail</h3>
+                                <div class="col-12">
+                                    <h2>User Detail</h2>
                                     <div>UserID: ${user.id}</div>
                                     <hr />
                                     <div class="mt-5">
-                                        <ul class="list-group">
+                                        <img
+                                            class="mb-4"
+                                            src="/images/avatar/${user.avatar}"
+                                            id="avatarPreview"
+                                            style="
+                                                max-height: 250px;
+                                                display: block;
+                                                border-radius: 10px;
+                                            "
+                                        />
+                                        <ul class="list-group col-8">
                                             <li
                                                 class="list-group-item active"
                                                 aria-current="true"
@@ -62,6 +71,9 @@ pageEncoding="UTF-8" %>
                                             </li>
                                             <li class="list-group-item">
                                                 ${user.address}
+                                            </li>
+                                            <li class="list-group-item">
+                                                ${user.role.name}
                                             </li>
                                         </ul>
                                     </div>

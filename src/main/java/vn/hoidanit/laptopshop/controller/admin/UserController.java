@@ -77,14 +77,24 @@ public class UserController {
     }
 
     @PostMapping("/admin/user/edit")
-    public String postUpdateUser(@ModelAttribute("user") User user) {
+    public String postUpdateUser(@ModelAttribute("user") User user, @RequestParam("hoidanitFile") MultipartFile file) {
         User updateUser = this.userService.findUserById(user.getId());
-        System.out.println(updateUser);
         if (updateUser != null) {
             updateUser.setFullName(user.getFullName());
             updateUser.setAddress(user.getAddress());
             updateUser.setPhone(user.getPhone());
             updateUser.setPassword(user.getPassword());
+            updateUser.setRole(this.userService.findRoleByName(user.getRole().getName()));
+
+            if (file != null) {
+                if (updateUser.getAvatar() != null) {
+                    String dir = this.uploadService.hanldeFindDirFile("avatar", updateUser.getAvatar());
+                    this.uploadService.handleDeleteFile(dir);
+                }
+                String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+                updateUser.setAvatar(avatar);
+            }
+
             this.userService.handleSaveData(updateUser);
         }
         return "redirect:/admin/user";
