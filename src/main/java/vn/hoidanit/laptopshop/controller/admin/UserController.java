@@ -28,13 +28,6 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping()
-    public String getHomePage(Model model) {
-        String s = this.userService.handleHello();
-        model.addAttribute("hello", s);
-        return "hello";
-    }
-
     @GetMapping("/admin/user/create")
     public String getCreateUserPage(Model model) {
         model.addAttribute("newUser", new User());
