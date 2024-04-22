@@ -12,7 +12,7 @@ public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    
+
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
@@ -57,5 +57,4 @@ public class OrderDetail {
         this.price = price;
     }
 
-    
 }

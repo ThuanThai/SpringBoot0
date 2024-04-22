@@ -52,11 +52,18 @@ pageEncoding="UTF-8" %>
                                             <label for="name" class="form-label"
                                                 >Name</label
                                             >
+                                            <c:set var="nameError">
+                                                <form:errors
+                                                    path="name"
+                                                    cssClass="invalid-feedback"
+                                                />
+                                            </c:set>
                                             <form:input
-                                                type="text"
-                                                class="form-control"
+                                                type="name"
+                                                class="form-control ${not empty nameError? 'is-invalid':''}"
                                                 path="name"
                                             />
+                                            ${nameError}
                                         </div>
                                         <div class="mb-3 col-12 col-md-6">
                                             <label
@@ -64,11 +71,18 @@ pageEncoding="UTF-8" %>
                                                 class="form-label"
                                                 >Price</label
                                             >
+                                            <c:set var="priceError">
+                                                <form:errors
+                                                    path="price"
+                                                    cssClass="invalid-feedback"
+                                                />
+                                            </c:set>
                                             <form:input
-                                                type="text"
-                                                class="form-control"
+                                                type="price"
+                                                class="form-control ${not empty priceError? 'is-invalid':''}"
                                                 path="price"
                                             />
+                                            ${priceError}
                                         </div>
 
                                         <div class="mb-3 col-12">
@@ -77,11 +91,18 @@ pageEncoding="UTF-8" %>
                                                 class="form-label"
                                                 >Detail description</label
                                             >
+                                            <c:set var="detailDescError">
+                                                <form:errors
+                                                    path="detailDesc"
+                                                    cssClass="invalid-feedback"
+                                                />
+                                            </c:set>
                                             <form:input
-                                                type="text"
-                                                class="form-control"
+                                                type="detailDesc"
+                                                class="form-control ${not empty detailDescError? 'is-invalid':''}"
                                                 path="detailDesc"
                                             />
+                                            ${detailDescError}
                                         </div>
 
                                         <div class="mb-3 col-12 col-md-6">
@@ -90,11 +111,18 @@ pageEncoding="UTF-8" %>
                                                 class="form-label"
                                                 >Short description</label
                                             >
+                                            <c:set var="shortDescError">
+                                                <form:errors
+                                                    path="shortDesc"
+                                                    cssClass="invalid-feedback"
+                                                />
+                                            </c:set>
                                             <form:input
-                                                type="text"
-                                                class="form-control"
+                                                type="shortDesc"
+                                                class="form-control ${not empty shortDescError? 'is-invalid':''}"
                                                 path="shortDesc"
                                             />
+                                            ${shortDescError}
                                         </div>
 
                                         <div class="mb-3 col-12 col-md-6">
@@ -103,11 +131,18 @@ pageEncoding="UTF-8" %>
                                                 class="form-label"
                                                 >Quantity</label
                                             >
+                                            <c:set var="quantityError">
+                                                <form:errors
+                                                    path="quantity"
+                                                    cssClass="invalid-feedback"
+                                                />
+                                            </c:set>
                                             <form:input
-                                                type="text"
-                                                class="form-control"
+                                                type="quantity"
+                                                class="form-control ${not empty quantityError? 'is-invalid':''}"
                                                 path="quantity"
                                             />
+                                            ${quantityError}
                                         </div>
 
                                         <div class="mb-3 col-12 col-md-6">
@@ -219,11 +254,11 @@ pageEncoding="UTF-8" %>
         <script src="/js/datatables-simple-demo.js"></script>
         <script>
             $(document).ready(() => {
-                const avatarFile = $('#avatarFile');
+                const avatarFile = $("#avatarFile");
                 avatarFile.change(function (e) {
                     const imgURL = URL.createObjectURL(e.target.files[0]);
-                    $('#avatarPreview').attr('src', imgURL);
-                    $('#avatarPreview').css({ display: 'block' });
+                    $("#avatarPreview").attr("src", imgURL);
+                    $("#avatarPreview").css({ display: "block" });
                 });
             });
         </script>

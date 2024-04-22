@@ -49,19 +49,31 @@ pageEncoding="UTF-8" %>
                                         enctype="multipart/form-data"
                                     >
                                         <div class="mb-3 col-12 col-md-6">
+                                            <c:set var="emailError">
+                                                <form:errors
+                                                    path="email"
+                                                    cssClass="invalid-feedback"
+                                                />
+                                            </c:set>
                                             <label
-                                                for="exampleInputEmail1"
+                                                for="email"
                                                 class="form-label"
                                                 >Email address</label
                                             >
                                             <form:input
                                                 type="email"
-                                                class="form-control"
-                                                aria-describedby="emailHelp"
+                                                class="form-control ${not empty emailError? 'is-invalid':''}"
                                                 path="email"
                                             />
+                                            ${emailError}
                                         </div>
                                         <div class="mb-3 col-12 col-md-6">
+                                            <c:set var="passwordError">
+                                                <form:errors
+                                                    path="password"
+                                                    cssClass="invalid-feedback"
+                                                />
+                                            </c:set>
                                             <label
                                                 for="exampleInputPassword1"
                                                 class="form-label"
@@ -69,22 +81,30 @@ pageEncoding="UTF-8" %>
                                             >
                                             <form:input
                                                 type="password"
-                                                class="form-control"
+                                                class="form-control ${not empty passwordError? 'is-invalid':''}"
                                                 path="password"
                                             />
+                                            ${passwordError}
                                         </div>
 
                                         <div class="mb-3 col-12 col-md-6">
+                                            <c:set var="phoneError">
+                                                <form:errors
+                                                    path="phone"
+                                                    cssClass="invalid-feedback"
+                                                />
+                                            </c:set>
                                             <label
                                                 for="phone"
                                                 class="form-label"
                                                 >Phone Number</label
                                             >
                                             <form:input
-                                                type="text"
-                                                class="form-control"
+                                                type="phone"
+                                                class="form-control ${not empty phoneError? 'is-invalid':''}"
                                                 path="phone"
                                             />
+                                            ${phoneError}
                                         </div>
 
                                         <div class="mb-3 col-12 col-md-6">
@@ -93,11 +113,18 @@ pageEncoding="UTF-8" %>
                                                 class="form-label"
                                                 >Full Name</label
                                             >
+                                            <c:set var="fullNameError">
+                                                <form:errors
+                                                    path="fullName"
+                                                    cssClass="invalid-feedback"
+                                                />
+                                            </c:set>
                                             <form:input
-                                                type="text"
-                                                class="form-control"
+                                                type="fullName"
+                                                class="form-control ${not empty fullNameError? 'is-invalid':''}"
                                                 path="fullName"
                                             />
+                                            ${fullNameError}
                                         </div>
                                         <div class="mb-3 col-12">
                                             <label
@@ -105,11 +132,18 @@ pageEncoding="UTF-8" %>
                                                 class="form-label"
                                                 >Address</label
                                             >
+                                            <c:set var="addressError">
+                                                <form:errors
+                                                    path="address"
+                                                    cssClass="invalid-feedback"
+                                                />
+                                            </c:set>
                                             <form:input
-                                                type="text"
-                                                class="form-control"
+                                                type="address"
+                                                class="form-control ${not empty addressError? 'is-invalid':''}"
                                                 path="address"
                                             />
+                                            ${addressError}
                                         </div>
                                         <div class="mb-3 col-12 col-md-6">
                                             <label for="role" class="form-label"
@@ -185,11 +219,11 @@ pageEncoding="UTF-8" %>
         <script src="/js/datatables-simple-demo.js"></script>
         <script>
             $(document).ready(() => {
-                const avatarFile = $('#avatarFile');
+                const avatarFile = $("#avatarFile");
                 avatarFile.change(function (e) {
                     const imgURL = URL.createObjectURL(e.target.files[0]);
-                    $('#avatarPreview').attr('src', imgURL);
-                    $('#avatarPreview').css({ display: 'block' });
+                    $("#avatarPreview").attr("src", imgURL);
+                    $("#avatarPreview").css({ display: "block" });
                 });
             });
         </script>

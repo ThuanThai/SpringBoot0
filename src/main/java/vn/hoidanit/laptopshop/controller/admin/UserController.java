@@ -4,6 +4,8 @@ import java.util.List;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.validation.Valid;
 import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.service.UploadService;
 import vn.hoidanit.laptopshop.service.UserService;
@@ -35,10 +38,21 @@ public class UserController {
     }
 
     @PostMapping("/admin/user/create")
-    public String creatUser(@ModelAttribute("newUser") User newUser, @RequestParam("hoidanitFile") MultipartFile file) {
-        String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+    public String createUser(@ModelAttribute("newUser") @Valid User newUser, BindingResult newUserBindingResult,
+            @RequestParam("hoidanitFile") MultipartFile file) {
+
         // String hashPassword = new
         // BCryptPasswordEncoder().encode(newUser.getPassword());
+
+        List<FieldError> errors = newUserBindingResult.getFieldErrors();
+        for (FieldError error : errors) {
+            System.out.println(error.getField() + " - " + error.getDefaultMessage());
+        }
+
+        if (newUserBindingResult.hasErrors()) {
+            return "/admin/user/create";
+        }
+        String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
         String hashPassword = passwordEncoder.encode(newUser.getPassword());
 
         newUser.setAvatar(avatar);
@@ -81,7 +95,7 @@ public class UserController {
 
             if (file != null) {
                 if (updateUser.getAvatar() != null) {
-                    String dir = this.uploadService.hanldeFindDirFile("avatar", updateUser.getAvatar());
+                    String dir = this.uploadService.handleFindDirFile("avatar", updateUser.getAvatar());
                     this.uploadService.handleDeleteFile(dir);
                 }
                 String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");

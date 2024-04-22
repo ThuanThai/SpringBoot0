@@ -71,12 +71,15 @@ pageEncoding="UTF-8" %>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach var="user" items="${usersList}">
+                                    <c:forEach
+                                        var="product"
+                                        items="${productList}"
+                                    >
                                         <tr class="align-middle">
-                                            <th scope="row">${user.id}</th>
-                                            <td>${user.email}</td>
-                                            <td>${user.fullName}</td>
-                                            <td>${user.role.name}</td>
+                                            <th scope="row">${product.id}</th>
+                                            <td>${product.name}</td>
+                                            <td>${product.price}</td>
+                                            <td>${product.factory}</td>
                                             <td>
                                                 <div
                                                     class="d-flex flex-row justify-content-start gap-3"

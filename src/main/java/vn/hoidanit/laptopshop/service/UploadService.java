@@ -19,12 +19,14 @@ public class UploadService {
         this.servletContext = servletContext;
     }
 
-    public String hanldeFindDirFile(String folder, String targetFile) {
+    public String handleFindDirFile(String folder, String targetFile) {
         String rootPath = this.servletContext.getRealPath("/resources/images/");
         return rootPath + folder + File.separator + targetFile;
     }
 
     public String handleSaveUploadFile(MultipartFile file, String targetFile) {
+        if (file.isEmpty())
+            return "";
         byte[] bytes;
         String finalName = "";
         try {
