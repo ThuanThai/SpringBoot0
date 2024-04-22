@@ -69,6 +69,7 @@ public class UserController {
         return "admin/user/show";
     }
 
+    // Detail Section
     @GetMapping("/admin/user/{id}")
     public String getDetailPage(Model model, @PathVariable long id) {
         User user = this.userService.findUserById(id);
@@ -76,6 +77,7 @@ public class UserController {
         return "admin/user/detail";
     }
 
+    // Update Section
     @GetMapping("/admin/user/edit/{id}")
     public String getUpdatePage(Model model, @PathVariable long id) {
         User user = this.userService.findUserById(id);
@@ -107,6 +109,7 @@ public class UserController {
         return "redirect:/admin/user";
     }
 
+    // Detelet Section
     @GetMapping("/admin/user/delete/{id}")
     public String getDeletePage(Model model, @PathVariable long id) {
         User user = this.userService.findUserById(id);

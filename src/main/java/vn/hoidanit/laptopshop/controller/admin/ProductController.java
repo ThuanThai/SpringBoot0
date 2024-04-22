@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import vn.hoidanit.laptopshop.domain.Product;
 import vn.hoidanit.laptopshop.service.ProductService;
@@ -30,6 +31,7 @@ public class ProductController {
         this.uploadService = uploadService;
     }
 
+    // Get All Products Page
     @GetMapping("admin/product")
     public String getProductPage(Model model) {
         List<Product> pList = this.productService.findAllProducts();
@@ -37,6 +39,7 @@ public class ProductController {
         return "/admin/product/show";
     }
 
+    // Create New Product
     @GetMapping("admin/product/create")
     public String getProductCreatePage(Model model) {
         model.addAttribute("newProduct", new Product());
@@ -63,7 +66,15 @@ public class ProductController {
 
         this.productService.handleSaveData(newProduct);
 
-        return "redirect:/admin/user";
+        return "redirect:/admin/product";
+    }
+
+    // Detail Controller for product
+    @GetMapping("/admin/product/{id}")
+    public String getDetailPage(Model model, @PathVariable long id) {
+        Product product = this.productService.findProductById(id);
+        model.addAttribute("product", product);
+        return "admin/product/detail";
     }
 
 }

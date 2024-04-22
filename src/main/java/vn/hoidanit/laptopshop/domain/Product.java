@@ -5,7 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -17,16 +18,21 @@ public class Product {
     private long id;
 
     @NotNull
+    @NotBlank(message = "Name can not empty")
     private String name;
 
+    @NotNull
+    @DecimalMin(value = "0", inclusive = false, message = "Price must be large than 0")
     private double price;
 
     private String image;
 
     @NotNull
+    @NotBlank(message = "detail description can not empty")
     private String detailDesc;
 
     @NotEmpty
+    @NotBlank(message = "short description can not empty")
     private String shortDesc;
 
     private long quantity;
