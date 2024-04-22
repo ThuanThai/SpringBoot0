@@ -10,4 +10,5 @@ public class ProductPageController {
     public String getProductDetailPage(@PathVariable long id) {
         return "client/product/show";
     }
+
 }
