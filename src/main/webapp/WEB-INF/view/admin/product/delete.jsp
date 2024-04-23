@@ -12,7 +12,7 @@ pageEncoding="UTF-8" %>
         />
         <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
         <meta name="author" content="Hỏi Dân IT" />
-        <title>Delete User - Hỏi Dân IT</title>
+        <title>Delete Product - Hỏi Dân IT</title>
         <link
             href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
             rel="stylesheet"
@@ -36,22 +36,22 @@ pageEncoding="UTF-8" %>
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Delete User</h1>
+                        <h1 class="mt-4">Delete Product</h1>
                         <div class="mt-5">
                             <div class="row">
                                 <div class="col-12">
-                                    <h3>Delete User</h3>
-                                    <div>UserID: ${user.id}</div>
+                                    <h3>Delete Product</h3>
+                                    <div>Product ID: ${product.id}</div>
                                     <hr />
                                     <form
-                                        action="/admin/user/delete/${user.id}"
+                                        action="/admin/product/delete/${product.id}"
                                         method="post"
                                     >
                                         <div
                                             class="alert alert-danger"
                                             role="alert"
                                         >
-                                            Are you sure to delete this user
+                                            Are you sure to delete this product
                                         </div>
                                         <button
                                             type="submit"

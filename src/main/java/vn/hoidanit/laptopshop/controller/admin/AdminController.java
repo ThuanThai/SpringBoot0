@@ -9,5 +9,5 @@ public class AdminController {
     public String getDashboardPage() {
         return "admin/dashboard/show";
     }
-    
+
 }

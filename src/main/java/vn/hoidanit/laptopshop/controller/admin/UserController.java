@@ -86,7 +86,18 @@ public class UserController {
     }
 
     @PostMapping("/admin/user/edit")
-    public String postUpdateUser(@ModelAttribute("user") User user, @RequestParam("hoidanitFile") MultipartFile file) {
+    public String postUpdateUser(@Valid @ModelAttribute("user") User user, BindingResult newUserBindingResult,
+            @RequestParam("hoidanitFile") MultipartFile file) {
+
+        List<FieldError> errors = newUserBindingResult.getFieldErrors();
+        for (FieldError error : errors) {
+            System.out.println(error.getField() + " - " + error.getDefaultMessage());
+        }
+
+        if (newUserBindingResult.hasErrors()) {
+            return "/admin/user/update";
+        }
+
         User updateUser = this.userService.findUserById(user.getId());
         if (updateUser != null) {
             updateUser.setFullName(user.getFullName());
@@ -95,7 +106,7 @@ public class UserController {
             updateUser.setPassword(user.getPassword());
             updateUser.setRole(this.userService.findRoleByName(user.getRole().getName()));
 
-            if (file != null) {
+            if (!file.isEmpty()) {
                 if (updateUser.getAvatar() != null) {
                     String dir = this.uploadService.handleFindDirFile("avatar", updateUser.getAvatar());
                     this.uploadService.handleDeleteFile(dir);

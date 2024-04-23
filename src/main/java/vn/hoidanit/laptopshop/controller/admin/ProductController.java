@@ -77,4 +77,61 @@ public class ProductController {
         return "admin/product/detail";
     }
 
+    // Update Controller for product
+    @GetMapping("/admin/product/edit/{id}")
+    public String getProductUpdatePage(Model model, @PathVariable long id) {
+        Product pr = this.productService.findProductById(id);
+        model.addAttribute("newProduct", pr);
+        return "admin/product/update";
+    }
+
+    @PostMapping("/admin/product/edit")
+    public String postMethodName(@Valid @ModelAttribute("newProduct") Product pr, BindingResult productBindingResult,
+            @RequestParam("hoidanitFile") MultipartFile file) {
+        Product updatePr = this.productService.findProductById(pr.getId());
+
+        List<FieldError> errors = productBindingResult.getFieldErrors();
+        for (FieldError error : errors) {
+            System.out.println(error.getField() + " - " + error.getDefaultMessage());
+        }
+
+        if (productBindingResult.hasErrors()) {
+            return "/admin/product/edit/" + pr.getId();
+        }
+
+        if (!file.isEmpty()) {
+            if (updatePr.getImage() != null) {
+                String dir = this.uploadService.handleFindDirFile("product", updatePr.getImage());
+                this.uploadService.handleDeleteFile(dir);
+            }
+            String image = this.uploadService.handleSaveUploadFile(file, "product");
+            updatePr.setImage(image);
+        }
+
+        updatePr.setName(pr.getName());
+        updatePr.setName(pr.getName());
+        updatePr.setDetailDesc(pr.getDetailDesc());
+        updatePr.setShortDesc(pr.getShortDesc());
+        updatePr.setSold(pr.getSold());
+        updatePr.setQuantity(pr.getQuantity());
+        updatePr.setFactory(pr.getFactory());
+        updatePr.setTarget(pr.getTarget());
+
+        this.productService.handleSaveData(updatePr);
+        return "redirect:/admin/product";
+    }
+
+    // Delete Controller for product
+    @GetMapping("/admin/product/delete/{id}")
+    public String getDeletePage(Model model, @PathVariable long id) {
+        Product pr = this.productService.findProductById(id);
+        model.addAttribute("product", pr);
+        return "admin/product/delete";
+    }
+
+    @PostMapping("/admin/product/delete/{id}")
+    public String postDeleteProduct(@PathVariable long id) {
+        this.productService.deleteProductId(id);
+        return "redirect:/admin/product";
+    }
 }
