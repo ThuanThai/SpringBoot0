@@ -18,7 +18,6 @@ import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.service.UploadService;
 import vn.hoidanit.laptopshop.service.UserService;
 
-// @RestController
 @Controller
 public class UserController {
     private final UserService userService;
@@ -29,6 +28,13 @@ public class UserController {
         this.userService = userService;
         this.uploadService = uploadService;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    @GetMapping("/admin/user")
+    public String getDisplayUserPage(Model model) {
+        List<User> usersList = this.userService.findAllUSer();
+        model.addAttribute("usersList", usersList);
+        return "admin/user/show";
     }
 
     @GetMapping("/admin/user/create")
@@ -52,21 +58,15 @@ public class UserController {
         if (newUserBindingResult.hasErrors()) {
             return "/admin/user/create";
         }
-        String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+        if (!file.isEmpty()) {
+            String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+            newUser.setAvatar(avatar);
+        }
         String hashPassword = passwordEncoder.encode(newUser.getPassword());
-
-        newUser.setAvatar(avatar);
         newUser.setPassword(hashPassword);
         newUser.setRole(this.userService.findRoleByName(newUser.getRole().getName()));
         this.userService.handleSaveData(newUser);
         return "redirect:/admin/user";
-    }
-
-    @GetMapping("/admin/user")
-    public String getDisplayUserPage(Model model) {
-        List<User> usersList = this.userService.findAllUSer();
-        model.addAttribute("usersList", usersList);
-        return "admin/user/show";
     }
 
     // Detail Section

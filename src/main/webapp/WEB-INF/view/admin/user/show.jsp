@@ -52,7 +52,7 @@ pageEncoding="UTF-8" %>
                                         type="button"
                                         class="btn btn-primary btn-lg"
                                     >
-                                        Create
+                                        Create User
                                     </button>
                                 </a>
                             </div>

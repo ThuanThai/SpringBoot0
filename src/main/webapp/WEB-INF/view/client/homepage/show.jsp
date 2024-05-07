@@ -162,13 +162,18 @@ uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
                                                     <div
                                                         class="p-4 border border-secondary border-top-0 rounded-bottom"
                                                     >
-                                                        <h4
-                                                            style="
-                                                                font-size: 15px;
-                                                            "
+                                                        <a
+                                                            href="/product/${product.id}"
                                                         >
-                                                            ${product.name}
-                                                        </h4>
+                                                            <h4
+                                                                class="text-success"
+                                                                style="
+                                                                    font-size: 15px;
+                                                                "
+                                                            >
+                                                                ${product.name}
+                                                            </h4>
+                                                        </a>
                                                         <p
                                                             style="
                                                                 font-size: 13px;

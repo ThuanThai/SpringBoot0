@@ -16,7 +16,9 @@ contentType="text/html;charset=UTF-8"%>
     <form
         class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
     >
-        <span style="color: white">Welcome, Hỏi Dân IT</span>
+        <span style="color: white"
+            >Welcome <c:out value="${pageContext.request.userPrincipal.name}"
+        /></span>
         <!-- <div class="input-group">
         <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
             aria-describedby="btnNavbarSearch" />
@@ -45,7 +47,18 @@ contentType="text/html;charset=UTF-8"%>
                 <li>
                     <hr class="dropdown-divider" />
                 </li>
-                <li><a class="dropdown-item" href="#!">Logout</a></li>
+                <li>
+                    <form action="/logout" method="post">
+                        <button type="submit" class="dropdown-item">
+                            Logout
+                        </button>
+                        <input
+                            type="hidden"
+                            name="${_csrf.parameterName}"
+                            value="${_csrf.token}"
+                        />
+                    </form>
+                </li>
             </ul>
         </li>
     </ul>

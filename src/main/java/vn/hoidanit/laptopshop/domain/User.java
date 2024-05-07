@@ -11,7 +11,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
@@ -21,16 +20,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotEmpty(message = "Email cannot be empty")
     @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
 
-    @NotEmpty(message = "Password cannot be empty")
-    @Min(8)
+    @NotEmpty(message = "Password must be field")
     private String password;
 
-    @Min(2)
-    @NotEmpty
+    @NotEmpty(message = "FullName must be field")
     private String fullName;
 
     private String phone;

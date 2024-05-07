@@ -72,7 +72,7 @@ public class ProductController {
     // Detail Controller for product
     @GetMapping("/admin/product/{id}")
     public String getDetailPage(Model model, @PathVariable long id) {
-        Product product = this.productService.findProductById(id);
+        Product product = this.productService.findProductById(id).get();
         model.addAttribute("product", product);
         return "admin/product/detail";
     }
@@ -80,7 +80,7 @@ public class ProductController {
     // Update Controller for product
     @GetMapping("/admin/product/edit/{id}")
     public String getProductUpdatePage(Model model, @PathVariable long id) {
-        Product pr = this.productService.findProductById(id);
+        Product pr = this.productService.findProductById(id).get();
         model.addAttribute("newProduct", pr);
         return "admin/product/update";
     }
@@ -88,7 +88,7 @@ public class ProductController {
     @PostMapping("/admin/product/edit")
     public String postMethodName(@Valid @ModelAttribute("newProduct") Product pr, BindingResult productBindingResult,
             @RequestParam("hoidanitFile") MultipartFile file) {
-        Product updatePr = this.productService.findProductById(pr.getId());
+        Product updatePr = this.productService.findProductById(pr.getId()).get();
 
         List<FieldError> errors = productBindingResult.getFieldErrors();
         for (FieldError error : errors) {
@@ -124,7 +124,7 @@ public class ProductController {
     // Delete Controller for product
     @GetMapping("/admin/product/delete/{id}")
     public String getDeletePage(Model model, @PathVariable long id) {
-        Product pr = this.productService.findProductById(id);
+        Product pr = this.productService.findProductById(id).get();
         model.addAttribute("product", pr);
         return "admin/product/delete";
     }
@@ -134,4 +134,5 @@ public class ProductController {
         this.productService.deleteProductId(id);
         return "redirect:/admin/product";
     }
+
 }
