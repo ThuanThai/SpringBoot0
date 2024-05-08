@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -43,8 +44,27 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Order> order;
 
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
+
     public long getId() {
         return id;
+    }
+
+    public List<Order> getOrder() {
+        return order;
+    }
+
+    public void setOrder(List<Order> order) {
+        this.order = order;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     public void setId(long id) {

@@ -54,6 +54,8 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
         if (user != null) {
             session.setAttribute("fullName", user.getFullName());
             session.setAttribute("avatar", user.getAvatar());
+            session.setAttribute("id", user.getId());
+            session.setAttribute("email", user.getEmail());
         }
     }
 
