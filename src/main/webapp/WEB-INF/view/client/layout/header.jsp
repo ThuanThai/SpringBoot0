@@ -71,11 +71,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                                             border-radius: 50%;
                                             overflow: hidden;
                                         "
-                                        src="/images/avatar/1714624477454-photo2.avif"
+                                        src="/images/avatar/${sessionScope.avatar}"
                                     />
                                     <div class="text-center my-3">
                                         <c:out
-                                            value="${pageContext.request.userPrincipal.name}"
+                                            value="${sessionScope.fullName}"
                                         />
                                     </div>
                                 </li>

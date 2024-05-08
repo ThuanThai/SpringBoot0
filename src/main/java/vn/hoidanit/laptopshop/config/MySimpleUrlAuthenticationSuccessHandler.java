@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;
@@ -16,9 +17,13 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import vn.hoidanit.laptopshop.domain.User;
+import vn.hoidanit.laptopshop.service.UserService;
 
 public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+    @Autowired
+    private UserService userService;
 
     protected String determineTargetUrl(final Authentication authentication) {
 
@@ -33,22 +38,28 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
                 return roleTargetUrlMap.get(authorityName);
             }
         }
-
         throw new IllegalStateException();
     }
 
-    protected void clearAuthenticationAttributes(HttpServletRequest request) {
+    protected void clearAuthenticationAttributes(HttpServletRequest request, Authentication authentication) {
         HttpSession session = request.getSession(false);
         if (session == null) {
             return;
         }
         session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+        // get email
+        String email = authentication.getName();
+        // get current user information
+        User user = this.userService.getUserByEmail(email).get();
+        if (user != null) {
+            session.setAttribute("fullName", user.getFullName());
+            session.setAttribute("avatar", user.getAvatar());
+        }
     }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
-        // TODO Auto-generated method stub
         String targetUrl = determineTargetUrl(authentication);
 
         if (response.isCommitted()) {
@@ -56,7 +67,7 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
         }
 
         redirectStrategy.sendRedirect(request, response, targetUrl);
-        clearAuthenticationAttributes(request);
+        clearAuthenticationAttributes(request, authentication);
     }
 
 }

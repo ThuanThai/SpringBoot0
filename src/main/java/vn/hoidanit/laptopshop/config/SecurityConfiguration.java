@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,6 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
+import org.springframework.session.security.web.authentication.SpringSessionRememberMeServices;
 
 import jakarta.servlet.DispatcherType;
 import vn.hoidanit.laptopshop.service.CustomUserService;
@@ -48,6 +50,14 @@ public class SecurityConfiguration {
     }
 
     @Bean
+    SpringSessionRememberMeServices rememberMeServices() {
+        SpringSessionRememberMeServices rememberMeServices = new SpringSessionRememberMeServices();
+        // optionally customize
+        rememberMeServices.setAlwaysRemember(true);
+        return rememberMeServices;
+    }
+
+    @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
@@ -65,6 +75,15 @@ public class SecurityConfiguration {
                         .failureUrl("/login?error")
                         .successHandler(myAuthenticationSuccessHandler())
                         .permitAll())
+
+                .rememberMe((rememberMe) -> rememberMe
+                        .rememberMeServices(rememberMeServices()))
+
+                .sessionManagement(
+                        (sessionManagement) -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                                .invalidSessionUrl("/logout?expired").maximumSessions(1)
+                                .maxSessionsPreventsLogin(false))
+                .logout(logout -> logout.deleteCookies("JSESSIONID").invalidateHttpSession(true))
 
                 .exceptionHandling(ex -> ex.accessDeniedPage("/error-page"));
 
